@@ -1,10 +1,16 @@
+require("dotenv").config();
+
 function createLink(bot, msg, chatID, groupId, groupName) {
   const chatId = chatID;
   const expiredDate = Math.floor(Date.now() / 1000) + 5 * 60; // 5 minutes
   var vipID = groupId;
   var vipName = groupName;
 
-  if (msg.chat.username == "VVIPGirls_Support" || chatId == "7435194573") {
+  if (
+    msg.chat.username == "vvipgirls_admin" ||
+    chatId == "7536353757" ||
+    process.env.ADMIN_NAME
+  ) {
     bot
       .createChatInviteLink(vipID, {
         name: `${groupName} created by ${
