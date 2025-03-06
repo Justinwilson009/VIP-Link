@@ -25,6 +25,10 @@ const vipGroupID = [
     name: "Thary",
     id: process.env.THARY_GROUP,
   },
+  {
+    name: "Thai OF",
+    id: process.env.THAI_OF_GROUP,
+  },
 ];
 
 // Create a bot that uses 'polling' to fetch new updates
@@ -35,7 +39,7 @@ bot.onText(/\/start/, (msg) => {
   const message = `Hello ${chatId}`;
   bot.sendMessage(chatId, message, {
     reply_markup: {
-      keyboard: [["👑 VIP", "💎 OF KH", "😩 Thary OF"]],
+      keyboard: [["👑 VIP", "💎 OF KH", "😩 Thary OF"], ["💫 Thai OF"]],
       resize_keyboard: true,
     },
   });
@@ -60,6 +64,15 @@ bot.onText("😩 Thary OF", (msg) => {
   const chatId = msg.chat.id;
   const groupID = vipGroupID[2].id;
   const groupName = vipGroupID[2].name;
+  createLink(bot, msg, chatId, groupID, groupName);
+});
+
+bot.onText("💫 Thai OF", (msg) => {
+  console.log(msg);
+
+  const chatId = msg.chat.id;
+  const groupID = vipGroupID[3].id;
+  const groupName = vipGroupID[3].name;
   createLink(bot, msg, chatId, groupID, groupName);
 });
 
