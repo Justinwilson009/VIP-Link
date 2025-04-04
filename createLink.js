@@ -3,13 +3,21 @@ require("dotenv").config();
 function createLink(bot, msg, chatID, groupId, groupName) {
   const chatId = chatID;
   const expiredDate = Math.floor(Date.now() / 1000) + 5 * 60; // 5 minutes
-  var vipID = groupId;
-  var vipName = groupName;
+  const vipID = groupId;
+  const vipName = groupName;
 
+  // Define the allowed admins
+  const allowedAdmins = [
+    "vvipgirls_admin",
+    "7536353757",
+    process.env.ADMIN_NAME,
+    "edwardhengheng",
+  ];
+
+  // Check if the user is an admin
   if (
-    msg.chat.username == "vvipgirls_admin" ||
-    chatId == "7536353757" ||
-    process.env.ADMIN_NAME
+    allowedAdmins.includes(msg.chat.username) ||
+    allowedAdmins.includes(msg.chat.id.toString())
   ) {
     bot
       .createChatInviteLink(vipID, {
@@ -27,7 +35,7 @@ function createLink(bot, msg, chatID, groupId, groupName) {
         );
       });
   } else {
-    bot.sendMessage(chatId, "You are not authorized to use this command.");
+    bot.sendMessage(chatId, "⛔ You are not authorized to generate links.");
   }
 }
 
