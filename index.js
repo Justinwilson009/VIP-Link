@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
-const { createLink } = require("./createLink");
+const { createLink, createMultipleLinks } = require("./createLink");
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.BOT_TOKEN;
 
@@ -25,10 +25,6 @@ const vipGroupID = [
     name: "Thary",
     id: process.env.THARY_GROUP,
   },
-  {
-    name: "Thai OF",
-    id: process.env.THAI_OF_GROUP,
-  },
 ];
 
 // Create a bot that uses 'polling' to fetch new updates
@@ -39,7 +35,10 @@ bot.onText(/\/start/, (msg) => {
   const message = `Hello ${chatId}`;
   bot.sendMessage(chatId, message, {
     reply_markup: {
-      keyboard: [["👑 VIP", "💎 OF KH", "😩 Thary OF"], ["💫 Thai OF"]],
+      keyboard: [
+        ["👑 VIP", "💎 OF KH", "😩 Thary OF"],
+        ["🔥 VIP + OF KH", "💯 All Groups"],
+      ],
       resize_keyboard: true,
     },
   });
@@ -59,21 +58,24 @@ bot.onText("💎 OF KH", (msg) => {
   createLink(bot, msg, chatId, groupID, groupName);
 });
 bot.onText("😩 Thary OF", (msg) => {
-  console.log(msg);
-
   const chatId = msg.chat.id;
   const groupID = vipGroupID[2].id;
   const groupName = vipGroupID[2].name;
   createLink(bot, msg, chatId, groupID, groupName);
 });
 
-bot.onText("💫 Thai OF", (msg) => {
-  console.log(msg);
+bot.on("message", (msg) => {
+  if (msg.text === "🔥 VIP + OF KH") {
+    const chatId = msg.chat.id;
+    const selectedGroups = [vipGroupID[0], vipGroupID[1]];
+    console.log("Selected groups:", selectedGroups);
+    createMultipleLinks(bot, msg, chatId, selectedGroups);
+  }
+});
 
+bot.onText("💯 All Groups", (msg) => {
   const chatId = msg.chat.id;
-  const groupID = vipGroupID[3].id;
-  const groupName = vipGroupID[3].name;
-  createLink(bot, msg, chatId, groupID, groupName);
+  createMultipleLinks(bot, msg, chatId, vipGroupID);
 });
 
 const PORT = process.env.PORT || 3000;
