@@ -25,6 +25,10 @@ const vipGroupID = [
     name: "Thary",
     id: process.env.THARY_GROUP,
   },
+  {
+    name: "Premium VVIP",
+    id: process.env.PREMIUM_VVIP_GROUP,
+  },
 ];
 
 // Create a bot that uses 'polling' to fetch new updates
@@ -37,7 +41,7 @@ bot.onText(/\/start/, (msg) => {
     reply_markup: {
       keyboard: [
         ["👑 VIP", "💎 OF KH", "😩 Thary OF"],
-        ["🔥 VIP + OF KH", "💯 All Groups"],
+        ["🔥 VIP + OF KH", "💯 All Groups", "Premium VVIP"],
       ],
       resize_keyboard: true,
     },
@@ -61,6 +65,13 @@ bot.onText("😩 Thary OF", (msg) => {
   const chatId = msg.chat.id;
   const groupID = vipGroupID[2].id;
   const groupName = vipGroupID[2].name;
+  createLink(bot, msg, chatId, groupID, groupName);
+});
+
+bot.onText("Premium VVIP", (msg) => {
+  const chatId = msg.chat.id;
+  const groupID = vipGroupID[3].id;
+  const groupName = vipGroupID[3].name;
   createLink(bot, msg, chatId, groupID, groupName);
 });
 
