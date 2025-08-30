@@ -64,7 +64,7 @@ async function createMultipleLinks(bot, msg, chatID, groups) {
       // Create links one by one with delay to avoid rate limits
       const groupLinks = [];
 
-      for (let i = 0; i < groups.length; i++) {
+      for (let i = 0; i < groups.length - 1; i++) {
         const group = groups[i];
         console.log(`Creating link for group ${i}:`, group.name);
 
