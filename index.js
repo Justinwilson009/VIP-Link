@@ -80,7 +80,7 @@ bot.on("message", (msg) => {
     const chatId = msg.chat.id;
     const selectedGroups = [vipGroupID[0], vipGroupID[1]];
     console.log("Selected groups:", selectedGroups);
-    createMultipleLinks(bot, msg, chatId, selectedGroups);
+    createMultipleLinks(bot, msg, chatId, selectedGroups.slice(0, 3));
   }
 });
 
