@@ -79,14 +79,14 @@ bot.on("message", (msg) => {
   if (msg.text === "🔥 VIP + OF KH") {
     const chatId = msg.chat.id;
     const selectedGroups = [vipGroupID[0], vipGroupID[1]];
-    console.log("Selected groups:", selectedGroups);
     createMultipleLinks(bot, msg, chatId, selectedGroups.slice(0, 3));
   }
 });
 
 bot.onText("💯 All Groups", (msg) => {
   const chatId = msg.chat.id;
-  createMultipleLinks(bot, msg, chatId, vipGroupID);
+  const selectedGroups = [vipGroupID[0], vipGroupID[1], vipGroupID[2]];
+  createMultipleLinks(bot, msg, chatId, selectedGroups);
 });
 
 const PORT = process.env.PORT || 3000;
